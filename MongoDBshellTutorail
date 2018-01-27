@@ -1,0 +1,656 @@
+Microsoft Windows [Version 10.0.15063]
+(c) 2017 Microsoft Corporation. All rights reserved.
+
+C:\Users\Shrinath>cd ..
+
+C:\Users>cd ..
+
+C:\>cd "Program Files"
+
+C:\Program Files>cd MongoDB
+
+C:\Program Files\MongoDB>cd Server
+
+C:\Program Files\MongoDB\Server>cd 3.6
+
+C:\Program Files\MongoDB\Server\3.6>cd bin
+
+C:\Program Files\MongoDB\Server\3.6\bin>mongo
+MongoDB shell version v3.6.0
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.0
+Server has startup warnings:
+2017-12-29T03:37:35.684-0700 I CONTROL  [initandlisten]
+2017-12-29T03:37:35.684-0700 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2017-12-29T03:37:35.685-0700 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2017-12-29T03:37:35.689-0700 I CONTROL  [initandlisten]
+2017-12-29T03:37:35.689-0700 I CONTROL  [initandlisten] ** WARNING: This server is bound to localhost.
+2017-12-29T03:37:35.690-0700 I CONTROL  [initandlisten] **          Remote systems will be unable to connect to this server.
+2017-12-29T03:37:35.690-0700 I CONTROL  [initandlisten] **          Start the server with --bind_ip <address> to specify which IP
+2017-12-29T03:37:35.691-0700 I CONTROL  [initandlisten] **          addresses it should serve responses from, or with --bind_ip_all to
+2017-12-29T03:37:35.692-0700 I CONTROL  [initandlisten] **          bind to all interfaces. If this behavior is desired, start the
+2017-12-29T03:37:35.692-0700 I CONTROL  [initandlisten] **          server with --bind_ip 127.0.0.1 to disable this warning.
+2017-12-29T03:37:35.693-0700 I CONTROL  [initandlisten]
+2017-12-29T03:37:35.695-0700 I CONTROL  [initandlisten]
+2017-12-29T03:37:35.696-0700 I CONTROL  [initandlisten] ** WARNING: The file system cache of this machine is configured to be greater than 40% of the total memory. This can lead to increased memory pressure and poor performance.
+2017-12-29T03:37:35.696-0700 I CONTROL  [initandlisten] See http://dochub.mongodb.org/core/wt-windows-system-file-cache
+2017-12-29T03:37:35.697-0700 I CONTROL  [initandlisten]
+> desc Table
+2017-12-29T16:08:31.622+0530 E QUERY    [thread1] SyntaxError: missing ; before statement @(shell):1:5
+> show dbs
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> db
+test
+> use mycustomer
+switched to db mycustomer
+> db.createCollections('customer');
+2017-12-29T16:42:35.719+0530 E QUERY    [thread1] TypeError: db.createCollections is not a function :
+@(shell):1:1
+> show collection
+2017-12-29T16:42:52.833+0530 E QUERY    [thread1] Error: don't know how to show [collection] :
+shellHelper.show@src/mongo/shell/utils.js:947:11
+shellHelper@src/mongo/shell/utils.js:700:15
+@(shellhelp2):1:1
+> show collections
+> db
+mycustomer
+> db.createCollections('customer');
+2017-12-29T16:43:55.767+0530 E QUERY    [thread1] TypeError: db.createCollections is not a function :
+@(shell):1:1
+> db.createCollection('customer');
+{ "ok" : 1 }
+> show Collection
+2017-12-29T16:44:20.547+0530 E QUERY    [thread1] Error: don't know how to show [Collection] :
+shellHelper.show@src/mongo/shell/utils.js:947:11
+shellHelper@src/mongo/shell/utils.js:700:15
+@(shellhelp2):1:1
+> show collections
+customer
+> db.customer.insert({first_name: "John" ,last_name : "Cena"});
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({first_name: "Dywane" ,last_name : "Johnson"});
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({first_name: "Randy" ,last_name : "Ortan"});
+WriteResult({ "nInserted" : 1 })
+> db.customers.find
+function (query, fields, limit, skip, batchSize, options) {
+    var cursor = new DBQuery(this._mongo,
+                             this._db,
+                             this,
+                             this._fullName,
+                             this._massageObject(query),
+                             fields,
+                             limit,
+                             skip,
+                             batchSize,
+                             options || this.getQueryOptions());
+
+    {
+        const session = this.getDB().getSession();
+
+        const readPreference = session._serverSession.client.getReadPreference(session);
+        if (readPreference !== null) {
+            cursor.readPref(readPreference.mode, readPreference.tags);
+        }
+
+        const readConcern = session._serverSession.client.getReadConcern(session);
+        if (readConcern !== null) {
+            cursor.readConcern(readConcern.level);
+        }
+    }
+
+    return cursor;
+}
+> db.customers.find()
+> ;
+> db.customers.find();
+> db.customer.find();
+{ "_id" : ObjectId("5a4623e60e8573d2babebaec"), "first_name" : "John", "last_name" : "Cena" }
+{ "_id" : ObjectId("5a4624090e8573d2babebaed"), "first_name" : "Dywane", "last_name" : "Johnson" }
+{ "_id" : ObjectId("5a4624220e8573d2babebaee"), "first_name" : "Randy", "last_name" : "Ortan" }
+> db.customer.insert({first_name: "Randy" ,last_name : "Ortan",gender : "male"});
+WriteResult({ "nInserted" : 1 })
+> db.customer.find();
+{ "_id" : ObjectId("5a4623e60e8573d2babebaec"), "first_name" : "John", "last_name" : "Cena" }
+{ "_id" : ObjectId("5a4624090e8573d2babebaed"), "first_name" : "Dywane", "last_name" : "Johnson" }
+{ "_id" : ObjectId("5a4624220e8573d2babebaee"), "first_name" : "Randy", "last_name" : "Ortan" }
+{ "_id" : ObjectId("5a4624af0e8573d2babebaef"), "first_name" : "Randy", "last_name" : "Ortan", "gender" : "male" }
+> db.customer.find().preety();
+2017-12-29T16:49:34.207+0530 E QUERY    [thread1] TypeError: db.customer.find(...).preety is not a function :
+@(shell):1:1
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dywane",
+        "last_name" : "Johnson"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+> db.customer.update({first_name: "Dywane"},{first_name: "Dwayne" , last_name: "Johnson" ,gender: "male"});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+> db.customer.update({first_name: "Randy"},{$set:{gender: "male"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+> db.customer.update({first_name: "Randy"},{$set:{age: 38}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male",
+        "age" : 38
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+> db.customer.update({first_name: "Randy"},{$inc:{age:5}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male",
+        "age" : 43
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+> db.customer.update({first_name: "Randy"},{$unset:{age:1}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+> db.customer.update({first_name: "Steven"},{$unset:{age:1}});
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.customer.update({first_name: "Steven"},{first_name: "Steven" , last_name: "Gutta" ,gender: "male"});
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.customer.update({first_name: "Steven"},{first_name: "Steven" , last_name: "Gutta" ,gender: "male"},{upset:truw});
+2017-12-29T17:00:17.849+0530 E QUERY    [thread1] ReferenceError: truw is not defined :
+@(shell):1:104
+> db.customer.update({first_name: "Steven"},{first_name: "Steven" , last_name: "Gutta" ,gender: "male"},{upset:true});
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.customer.update({first_name: "Steven"},{first_name: "Steven" , last_name: "Gutta" ,gender: "male"},{upsert:true});
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 1,
+        "nModified" : 0,
+        "_id" : ObjectId("5a4627707265014ad36ad44a")
+})
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627707265014ad36ad44a"),
+        "first_name" : "Steven",
+        "last_name" : "Gutta",
+        "gender" : "male"
+}
+> db.customer.update({first_name: "Marry"},{first_name: "Marry" , last_name: "Rose" ,gender: "male"},{upsert:true});
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 1,
+        "nModified" : 0,
+        "_id" : ObjectId("5a4627f27265014ad36ad450")
+})
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627707265014ad36ad44a"),
+        "first_name" : "Steven",
+        "last_name" : "Gutta",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627f27265014ad36ad450"),
+        "first_name" : "Marry",
+        "last_name" : "Rose",
+        "gender" : "male"
+}
+> db.customer.update({first_name: "Marry"},{$rename:"gender" : "female"});
+2017-12-29T17:04:24.190+0530 E QUERY    [thread1] SyntaxError: missing } after property list @(shell):1:59
+> db.customer.update({first_name: "Marry"},{$rename:{"gender" : "female"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627707265014ad36ad44a"),
+        "first_name" : "Steven",
+        "last_name" : "Gutta",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627f27265014ad36ad450"),
+        "first_name" : "Marry",
+        "last_name" : "Rose",
+        "female" : "male"
+}
+> db.customer.update({first_name: "Marry"},{$rename:{"gender" : "female"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 0 })
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627707265014ad36ad44a"),
+        "first_name" : "Steven",
+        "last_name" : "Gutta",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627f27265014ad36ad450"),
+        "first_name" : "Marry",
+        "last_name" : "Rose",
+        "female" : "male"
+}
+> db.customer.update({first_name: "Marry"},{$rename:{"gender" : "gender"}});
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 0,
+        "nModified" : 0,
+        "writeError" : {
+                "code" : 2,
+                "errmsg" : "The source and target field for $rename must differ: gender: \"gender\""
+        }
+})
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627707265014ad36ad44a"),
+        "first_name" : "Steven",
+        "last_name" : "Gutta",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627f27265014ad36ad450"),
+        "first_name" : "Marry",
+        "last_name" : "Rose",
+        "female" : "male"
+}
+> db.customer.update({first_name: "Marry"},{$rename:{"female" : "gender"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customer.update({first_name: "Marry"},{$rename:{"female" : "gender"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 0 })
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627707265014ad36ad44a"),
+        "first_name" : "Steven",
+        "last_name" : "Gutta",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627f27265014ad36ad450"),
+        "first_name" : "Marry",
+        "last_name" : "Rose",
+        "gender" : "male"
+}
+> db.customer.remove({first_name: "Marry"});
+WriteResult({ "nRemoved" : 1 })
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624220e8573d2babebaee"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627707265014ad36ad44a"),
+        "first_name" : "Steven",
+        "last_name" : "Gutta",
+        "gender" : "male"
+}
+> db.customer.remove({first_name: "Randy"},{justOne:1});
+WriteResult({ "nRemoved" : 1 })
+> db.customer.find().pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627707265014ad36ad44a"),
+        "first_name" : "Steven",
+        "last_name" : "Gutta",
+        "gender" : "male"
+}
+> db.customer.find({age: {$lt:50}});
+> db.customer.find({age: {$lt:50}}).pretty();
+> db.customer.find().sort();
+Error: error: {
+        "ok" : 0,
+        "errmsg" : "Failed to parse: sort: undefined. 'sort' field must be of BSON type object.",
+        "code" : 9,
+        "codeName" : "FailedToParse"
+}
+> db.customer.find().sort({last_name:1});
+{ "_id" : ObjectId("5a4623e60e8573d2babebaec"), "first_name" : "John", "last_name" : "Cena" }
+{ "_id" : ObjectId("5a4627707265014ad36ad44a"), "first_name" : "Steven", "last_name" : "Gutta", "gender" : "male" }
+{ "_id" : ObjectId("5a4624090e8573d2babebaed"), "first_name" : "Dwayne", "last_name" : "Johnson", "gender" : "male" }
+{ "_id" : ObjectId("5a4624af0e8573d2babebaef"), "first_name" : "Randy", "last_name" : "Ortan", "gender" : "male" }
+> db.customer.find().sort({last_name:1}).pretty();
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+{
+        "_id" : ObjectId("5a4627707265014ad36ad44a"),
+        "first_name" : "Steven",
+        "last_name" : "Gutta",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+> db.customer.find().sort({last_name:-1}).pretty();
+{
+        "_id" : ObjectId("5a4624af0e8573d2babebaef"),
+        "first_name" : "Randy",
+        "last_name" : "Ortan",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4624090e8573d2babebaed"),
+        "first_name" : "Dwayne",
+        "last_name" : "Johnson",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4627707265014ad36ad44a"),
+        "first_name" : "Steven",
+        "last_name" : "Gutta",
+        "gender" : "male"
+}
+{
+        "_id" : ObjectId("5a4623e60e8573d2babebaec"),
+        "first_name" : "John",
+        "last_name" : "Cena"
+}
+> db.customer.find().count();
+4
+> db.customer.find().forEach(function(doc){print("Customer Name: "+doc.first_name)});
+Customer Name: John
+Customer Name: Dwayne
+Customer Name: Randy
+Customer Name: Steven
+>
